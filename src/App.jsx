@@ -1,14 +1,5 @@
-export default function App() {
-  return (
-    <div style={{
-      minHeight: "100vh",
-      background: "green",
-      color: "white",
-      fontSize: "40px",
-      textAlign: "center",
-      paddingTop: "100px"
-    }}>
-      REACT FUNCIONANDO
-    </div>
-  );
-}
+import React from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App.jsx";
+
+createRoot(document.getElementById("root")).render(<App />);
