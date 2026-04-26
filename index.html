@@ -1,303 +1,244 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Python Quest</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Quest</title>
 
-  <style>
-    body {
-      margin: 0;
-      background: #050816;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
-    }
+<style>
+body{
+margin:0;
+background:#050816;
+color:white;
+font-family:Arial;
+text-align:center;
+padding:20px;
+}
 
-    img {
-      width: 100%;
-      max-width: 950px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px black;
-    }
+img{
+width:100%;
+max-width:950px;
+border-radius:12px;
+box-shadow:0 0 20px black;
+}
 
-    button {
-      margin: 10px;
-      padding: 12px 25px;
-      font-size: 18px;
-      border: none;
-      border-radius: 8px;
-      background: #2563eb;
-      color: white;
-      cursor: pointer;
-    }
+button{
+padding:12px 24px;
+margin:10px;
+font-size:18px;
+border:none;
+border-radius:8px;
+background:#2563eb;
+color:white;
+cursor:pointer;
+}
 
-    button:disabled {
-      background: #555;
-      cursor: not-allowed;
-      opacity: 0.6;
-    }
+button:disabled{
+background:#555;
+cursor:not-allowed;
+}
 
-    .painel {
-      max-width: 950px;
-      margin: 20px auto;
-      padding: 20px;
-      border: 2px solid #ef4444;
-      border-radius: 15px;
-      background: #020617;
-    }
+.painel{
+max-width:950px;
+margin:auto;
+padding:20px;
+border:2px solid red;
+border-radius:15px;
+background:#020617;
+}
 
-    .binario {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin: 15px 0;
-      flex-wrap: wrap;
-    }
+.bits{
+display:flex;
+justify-content:center;
+gap:8px;
+margin:15px 0;
+flex-wrap:wrap;
+}
 
-    .bit {
-      background: #111827;
-      border: 1px solid #38bdf8;
-      border-radius: 8px;
-      padding: 15px;
-      font-size: 32px;
-      font-weight: bold;
-      min-width: 45px;
-    }
+.bit{
+background:#111827;
+padding:12px;
+border-radius:8px;
+font-size:28px;
+min-width:40px;
+}
 
-    .interruptores {
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      gap: 10px;
-      margin-top: 20px;
-    }
+.grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+margin-top:20px;
+}
 
-    .interruptor {
-      background: #111827;
-      border: 1px solid #475569;
-      border-radius: 12px;
-      padding: 10px;
-    }
+.item{
+background:#111827;
+padding:10px;
+border-radius:12px;
+cursor:pointer;
+}
 
-    .valor {
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
+.valor{
+font-size:22px;
+font-weight:bold;
+}
 
-    .switch {
-      width: 45px;
-      height: 85px;
-      margin: auto;
-      background: #334155;
-      border-radius: 30px;
-      padding: 5px;
-      position: relative;
-      cursor: pointer;
-    }
+.estado{
+font-size:30px;
+margin-top:10px;
+}
 
-    .bolinha {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      background: white;
-      position: absolute;
-      bottom: 5px;
-      left: 5px;
-      transition: 0.2s;
-    }
-
-    .ligado .switch {
-      background: #16a34a;
-    }
-
-    .ligado .bolinha {
-      bottom: 45px;
-      background: #bbf7d0;
-    }
-
-    .resultado {
-      margin-top: 20px;
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    .ok {
-      color: #22c55e;
-    }
-
-    .erro {
-      color: #f87171;
-    }
-
-    @media (max-width: 700px) {
-      .interruptores {
-        grid-template-columns: repeat(4, 1fr);
-      }
-
-      .bit {
-        font-size: 24px;
-        min-width: 35px;
-      }
-    }
-  </style>
+.ok{
+color:#22c55e;
+}
+</style>
 </head>
 
 <body>
 
-  <h1 id="titulo">Python Quest: Conde Dross</h1>
+<h1 id="titulo"></h1>
 
-  <div id="conteudo"></div>
+<div id="conteudo"></div>
 
-  <div>
-    <button onclick="voltar()">Anterior</button>
-    <button id="btnProxima" onclick="proxima()">Próxima</button>
-  </div>
+<div>
+<button onclick="voltar()">Anterior</button>
+<button id="btnProxima" onclick="proxima()">Próxima</button>
+</div>
 
-  <script>
-    const paginas = [
-      { tipo: "imagem", titulo: "Python Quest: Conde Dross", imagem: "/capa_pa_00.png" },
-      { tipo: "imagem", titulo: "Página 1", imagem: "/quadrinho_pa01.png" },
-      { tipo: "imagem", titulo: "Página 2", imagem: "/quadrinho_pa02.png" },
+<audio id="musica" src="/musica_desafio.mp3" loop></audio>
 
-      { tipo: "desafio", titulo: "Desafio 1", imagem: "/desafio_01.png", meta: 10 },
-      { tipo: "desafio", titulo: "Desafio 2", imagem: "/desafio_02.png", meta: 25 },
-      { tipo: "desafio", titulo: "Desafio 3", imagem: "/desafio_03.png", meta: 43 }
-    ];
+<script>
+const paginas = [
+{tipo:"img", titulo:"Python Quest", imagem:"/capa_pa_00.png"},
+{tipo:"img", titulo:"Página 1", imagem:"/quadrinho_pa01.png"},
+{tipo:"img", titulo:"Página 2", imagem:"/quadrinho_pa02.png"},
+{tipo:"desafio", titulo:"Desafio 1", imagem:"/desafio_01.png", meta:10},
+{tipo:"desafio", titulo:"Desafio 2", imagem:"/desafio_02.png", meta:25},
+{tipo:"desafio", titulo:"Desafio 3", imagem:"/desafio_03.png", meta:43}
+];
 
-    const valores = [128, 64, 32, 16, 8, 4, 2, 1];
+const valores = [128,64,32,16,8,4,2,1];
 
-    let pagina = 0;
-    let bits = [0, 0, 0, 0, 0, 0, 0, 0];
+let pagina = 0;
+let bits = [0,0,0,0,0,0,0,0];
 
-    function somaBits() {
-      return bits.reduce((soma, bit, i) => soma + bit * valores[i], 0);
-    }
+function tocarMusica(){
+const m=document.getElementById("musica");
+m.volume=0.35;
+m.play().catch(()=>{});
+}
 
-    function codigoBinario() {
-      return bits.join("");
-    }
+function pararMusica(){
+const m=document.getElementById("musica");
+m.pause();
+m.currentTime=0;
+}
 
-    function atualizar() {
-      const atual = paginas[pagina];
-      document.getElementById("titulo").innerText = atual.titulo;
+function soma(){
+let s=0;
+for(let i=0;i<bits.length;i++){
+s += bits[i]*valores[i];
+}
+return s;
+}
 
-      if (atual.tipo === "imagem") {
-        document.getElementById("conteudo").innerHTML = `
-          <img src="${atual.imagem}" alt="${atual.titulo}">
-        `;
-        document.getElementById("btnProxima").disabled = false;
-      }
+function atualizar(){
+const atual = paginas[pagina];
+document.getElementById("titulo").innerText = atual.titulo;
 
-      if (atual.tipo === "desafio") {
-        bits = [0, 0, 0, 0, 0, 0, 0, 0];
+if(atual.tipo==="img"){
+pararMusica();
 
-        document.getElementById("conteudo").innerHTML = `
-          <img src="${atual.imagem}" alt="${atual.titulo}">
+document.getElementById("conteudo").innerHTML =
+`<img src="${atual.imagem}" alt="${atual.titulo}">`;
 
-          <div class="painel">
-            <h2>Área Interativa</h2>
-            <p>Meta: formar o número decimal <strong>${atual.meta}</strong></p>
+document.getElementById("btnProxima").disabled=false;
+}
 
-            <h3>Código binário atual</h3>
-            <div class="binario" id="binario"></div>
+if(atual.tipo==="desafio"){
+bits=[0,0,0,0,0,0,0,0];
 
-            <div class="interruptores" id="interruptores"></div>
+document.getElementById("conteudo").innerHTML =
+`
+<img src="${atual.imagem}" alt="${atual.titulo}">
+<div class="painel">
+<h2>Meta: ${atual.meta}</h2>
 
-            <div class="resultado" id="resultado"></div>
-          </div>
-        `;
+<div class="bits" id="bits"></div>
 
-        montarInterruptores();
-        atualizarDesafio();
-      }
-    }
+<div class="grid" id="grid"></div>
 
-    function montarInterruptores() {
-      const area = document.getElementById("interruptores");
-      area.innerHTML = "";
+<div id="resultado"></div>
+</div>
+`;
 
-      valores.forEach((valor, i) => {
-        area.innerHTML += `
-          <div class="interruptor" id="int-${i}" onclick="alternar(${i})">
-            <div class="valor">${valor}</div>
-            <div class="switch">
-              <div class="bolinha"></div>
-            </div>
-            <div id="bit-${i}">0</div>
-          </div>
-        `;
-      });
-    }
+montar();
+tocarMusica();
+render();
+}
+}
 
-    function alternar(i) {
-      bits[i] = bits[i] === 0 ? 1 : 0;
-      atualizarDesafio();
-    }
+function montar(){
+let html="";
+for(let i=0;i<valores.length;i++){
+html += `
+<div class="item" onclick="trocar(${i})">
+<div class="valor">${valores[i]}</div>
+<div class="estado" id="e${i}">0</div>
+</div>
+`;
+}
+document.getElementById("grid").innerHTML=html;
+}
 
-    function atualizarDesafio() {
-      const atual = paginas[pagina];
-      const soma = somaBits();
+function trocar(i){
+bits[i]=bits[i]?0:1;
+render();
+}
 
-      document.getElementById("binario").innerHTML = bits
-        .map(bit => `<div class="bit">${bit}</div>`)
-        .join("");
+function render(){
+document.getElementById("bits").innerHTML =
+bits.map(b=>`<div class="bit">${b}</div>`).join("");
 
-      bits.forEach((bit, i) => {
-        const el = document.getElementById(`int-${i}`);
-        const bitTexto = document.getElementById(`bit-${i}`);
+for(let i=0;i<bits.length;i++){
+document.getElementById("e"+i).innerText = bits[i];
+}
 
-        if (bit === 1) {
-          el.classList.add("ligado");
-        } else {
-          el.classList.remove("ligado");
-        }
+const meta = paginas[pagina].meta;
+const total = soma();
 
-        bitTexto.innerText = bit;
-      });
+if(total===meta){
+document.getElementById("resultado").innerHTML =
+`<h2 class="ok">✓ Correto! Valor ${total}</h2>`;
+document.getElementById("btnProxima").disabled=false;
+}else if(total > meta){
+document.getElementById("resultado").innerHTML =
+`<h2 style="color:#ef4444;">Potência excedida: ${total}</h2>`;
+document.getElementById("btnProxima").disabled=true;
+}else{
+document.getElementById("resultado").innerHTML =
+`<h2>Soma atual: ${total}</h2>`;
+document.getElementById("btnProxima").disabled=true;
+}
+}
 
-      const resultado = document.getElementById("resultado");
+function proxima(){
+if(pagina<paginas.length-1){
+pagina++;
+atualizar();
+window.scrollTo(0,0);
+}
+}
 
-      if (soma === atual.meta) {
-        resultado.innerHTML = `
-          <span class="ok">✓ Potência confirmada!</span><br>
-          Código binário: ${codigoBinario()}<br>
-          Decimal: ${soma}
-        `;
-        document.getElementById("btnProxima").disabled = false;
-      } else if (soma > atual.meta) {
-        resultado.innerHTML = `
-          <span class="erro">✕ Potência excedida!</span><br>
-          Soma atual: ${soma}
-        `;
-        document.getElementById("btnProxima").disabled = true;
-      } else {
-        resultado.innerHTML = `
-          Continue calibrando.<br>
-          Soma atual: ${soma}
-        `;
-        document.getElementById("btnProxima").disabled = true;
-      }
-    }
+function voltar(){
+if(pagina>0){
+pagina--;
+atualizar();
+window.scrollTo(0,0);
+}
+}
 
-    function proxima() {
-      if (pagina < paginas.length - 1) {
-        pagina++;
-        atualizar();
-        window.scrollTo(0, 0);
-      }
-    }
-
-    function voltar() {
-      if (pagina > 0) {
-        pagina--;
-        atualizar();
-        window.scrollTo(0, 0);
-      }
-    }
-
-    atualizar();
-  </script>
+atualizar();
+</script>
 
 </body>
 </html>
